@@ -1,4 +1,5 @@
 const c = require('./character');
+const dictionary = require('./common');
 
 //https://stackoverflow.com/questions/566203/changing-css-values-with-javascript?noredirect=1&lq=1
 function CCSStylesheetRuleStyle(stylesheet, selectorText, style, value){
@@ -105,6 +106,9 @@ function inputChanged() {
     
     character_input.value.split("\n").forEach(function (l) {
         l.split(" ").forEach(function (w) {
+            if (dictionary[w] != undefined)
+                w = dictionary[w];
+            
             var parsed_word = '';
             if (cached_words[w] == undefined) {
                 parsed_word = parseWord(w);

@@ -1,18 +1,35 @@
 <html>
     <head>
+        <meta charset="UTF-8">
         <style>
             body {
-                font-family:arial;
+                font-family:monospace;
+                margin:0px;
+                overflow:hidden;
+                background-color:#222;
             }
             span {
                 display:inline-block;
                 position:relative;
             }
             
+            #center {
+                text-align:center;
+                margin:auto;
+                width:50%;
+                min-width:700px;
+                padding:8px;
+                height:100%;
+                background-color:#FFF;
+            }
+            #center * {
+                margin:auto;
+            }
+            
             svg {
                 width:16px;
                 height:16px;
-                transform:translate(0px, 2.2px);
+                transform:translate(0px, 2.4px);
             }
             path {
                 fill:none;
@@ -29,15 +46,21 @@
                 height:16px;
             }
             #preview {
-                width:500px;
+                width:575px;
                 padding:10px;
-                border-top: 2px solid lightgreen;
+                border:1px solid black;
                 background-color:#F8F8F8;
+                color:black;
+                text-align:left;
+            }
+            hr {
+                width:50%;
+                border-bottom:1px solid lightgrey;
             }
             
             textarea {
-                width:800px;
-                height:75px;
+                width:575px;
+                height:200px;
             }
             
             canvas {
@@ -49,11 +72,17 @@
         <script src="bundle.js"></script>
     </head>
     <body>
-        <h1>Character SVG Preview</h1>
-        <textarea id="character_input">l;,ah h'm,n;oo b'n,g;ee s b b,r'n f,r;ee n,d c,v'l;,ee n;,ih d,g'n,t n,d r't;ai s . th;ay b n,d'd;ow v'th r's,n;ee n,d c,n'sh,n s n,d sh,d c,t;,ah t'r,d;ow v'n;uh n'th,r;,ah n;,ih s,p'r,t f b,r'th,r;uh - h,d . 
+        <div id="center">
+            <br><br>
+            <h1>Character SVG Preview</h1>
+            <br>
+            <textarea id="character_input">'1. l;,ah h'm,n;oo b'n,g;ee s b b,r'n f,r;ee n,d c,v'l;,ee n;,ih d,g'n,t n,d r't;ai s . th;ay b n,d'd;ow v'th r's,n;ee n,d c,n'sh,n s n,d sh,d c,t;,ah t'r,d;ow v'n;uh n'th,r;,ah n;,ih s,p'r,t f b,r'th,r;uh - h,d . 
 
-v,r'n;ay,eh b n,t't,l;ai - d t l;,ah th r't;ai s n,d f,r'd,m;ee s s't;eh f'r,th;oh n;,ih th,s d,c'l,r - sh,n;,ay , v,th't;ow d,s't,n - c'sh,n f n;ay,ah c'n,d;ai , s'ch;uh s;,ah r's;ay , c'l,r;uh , s,x , l,n'g,j , r,l'j,n;ih , p,l't,c;ih - l , r th,r;,uh p,n'n;ee,ah , n,sh'n,l r s'sh,l;oh r'j,n;,oh , p,r'p,r;ah - t;ay , b,r'th r th,r;,uh s,t't,s;ah . f,r'th,r - m'r;oh , n d,s't,n - c'sh,n sh'l;ah b m'd;ay n;,ah th b's,s;ay f th p,l't,c;ih - l , j,r's,d;ih - c,sh'n,l r n,t'r - n,sh'n,l;ah s,t't,s;ah f th c,n't,r;ee t,r't,r;ah t v'ch;ih p,r's,n b'l,n;eh - g s , v'th,r;eh t;,ih b n,d'p,n;eh - d,n't , t,r's,t;uh , n'n;ah - s'l,f;eh - g,v'r,n '' r n,d'r n;ay,ah th,r;,uh l'm,t;ih - sh,n;,ay f s,v'r,n - t;ay,ih .</textarea>
-        <p>모든 인간은 자유롭고 품위와 권리면에서 평등하게 태어납니다. 그들은 이성과 양심을 부여 받았으며 형제애의 정신으로 서로를 대해야합니다.</p>
-        <div id="preview"></div>
+    '2. v,r'n;ay,eh b n,t't,l;ai - d t l;,ah th r't;ai s n,d f,r'd,m;ee s s't;eh f'r,th;oh n;,ih th,s d,c'l,r - sh,n;,ay , v,th't;ow d,s't,n - c'sh,n f n;ay,ah c'n,d;ai , s'ch;uh s;,ah r's;ay , c'l,r;uh , s,x , l,n'g,j , r,l'j,n;ih , p,l't,c;ih - l , r th,r;,uh p,n'n;ee,ah , n,sh'n,l r s'sh,l;oh r'j,n;,oh , p,r'p,r;ah - t;ay , b,r'th r th,r;,uh s,t't,s;ah . f,r'th,r - m'r;oh , n d,s't,n - c'sh,n sh'l;ah b m'd;ay n;,ah th b's,s;ay f th p,l't,c;ih - l , j,r's,d;ih - c,sh'n,l r n,t'r - n,sh'n,l;ah s,t't,s;ah f th c,n't,r;ee t,r't,r;ah t v'ch;ih p,r's,n b'l,n;eh - g s , v'th,r;eh t;,ih b n,d'p,n;eh - d,n't , t,r's,t;uh , n'n;ah - s'l,f;eh - g,v'r,n '' r n,d'r n;ay,ah th,r;,uh l'm,t;ih - sh,n;,ay f s,v'r,n - t;ay,ih .
+
+    '3. v,r'n;,eh h's;ah th r't;ai t l'f;ai l,b'r,t;ay n,d s,c'r,t f p,r's,n .</textarea>
+            <br><br>
+            <div id="preview"></div>
+        </div>
     </body>
 </html>
