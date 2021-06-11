@@ -30,11 +30,11 @@ function CCSStylesheetRuleStyle(stylesheet, selectorText, style, value){
 }
 
 function addSvg(paths) {
-    preview.innerHTML += c.pathsToSvg(paths);
+    return c.pathsToSvg(paths);
 }
 
 function addText(text) {
-    preview.innerHTML += "<span>" + text + "</span>";
+    return "<span>" + text + "</span>";
 }
 
 function parseWord(word) {
@@ -47,12 +47,13 @@ function parseWord(word) {
         "s":"⠁",
     };
     
+    if (word == "")
+        return "";
+    
     if (word[0] == "'") {
-        addText(word.substring(1));
-        return;
+        return addText(word.substring(1));
     } else if (word.length == 1 && punctuation[word[0]] !== undefined) {
-        addText(punctuation[word[0]]);
-        return;
+        return addText(punctuation[word[0]]);
     }
     
     var final = "";
@@ -94,16 +95,31 @@ function parseWord(word) {
         }
     }
     
-    addSvg([c.roundPath(final, 0.25)]);
-    //addSvg([final]);
+    return addSvg([c.roundPath(final, 0.25)]);
 }
 
+var cached_words = {};
+
 function inputChanged() {
-    preview.innerHTML = "";
+    var finalHTML = "";
     
-    character_input.value.split(" ").forEach(function (w) {
-        parseWord(w);
+    character_input.value.split("\n").forEach(function (l) {
+        l.split(" ").forEach(function (w) {
+            var parsed_word = '';
+            if (cached_words[w] == undefined) {
+                parsed_word = parseWord(w);
+                cached_words[w] = parsed_word;
+            } else {
+                parsed_word = cached_words[w];
+            }
+                
+            if (parsed_word != '')
+                finalHTML += parsed_word;
+        });
+        finalHTML += "<br>";
     });
+    
+    preview.innerHTML = finalHTML;
 }
 
 window.onload = function () {

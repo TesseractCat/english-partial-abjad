@@ -77,8 +77,26 @@
             "small":"M 5 10 L 5 0 M 0 0 L 10 0"
         },
         "ch":{
-            "large":"M 5 10 L 5 0 M 0 0 L 10 0 M 0 10 L 10 10 M 7.5 10 L 7.5 7",
+            "large-comment":"M 5 10 L 5 0 M 0 0 L 10 0 M 0 10 L 10 10 M 7.5 10 L 7.5 7",
+            "large":"M 5 10 L 5 0 M 0 0 L 10 0 M 10 0 L 10 10",
             "small":"M 5 10 L 5 0 M 0 0 L 10 0 M 10 0 L 10 10"
+        }
+    },
+    "combos": {
+        "th,r": {
+            "default":"M 0 4 L 10 4 M 5 4 L 5 10 M 5 7 L 8 7 M 1 4 L 1 0 L 9 0 L 9 4"
+        },
+        "t,r": {
+            "default":"M 0 4 L 10 4 M 5 4 L 5 10 M 1 4 L 1 0 L 9 0 L 9 4"
+        },
+        "t,c": {
+            "default":"M 0 4 L 10 4 M 5 0 L 5 10 M 1 0 L 9 0"
+        },
+        "v,r": {
+            "default":"M 0 4 L 10 4 Q 10 8 0 8 M 5 7.5 L 5 10 M 1 4 L 1 0 L 9 0 L 9 4"
+        },
+        "v,c": {
+            "default":"M 0 3 L 10 3 Q 10 7 0 8 M 5 7 L 5 10 M 1 0 L 9 0 M 5 3 L 5 0"
         }
     },
     "markers": {

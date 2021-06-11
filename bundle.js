@@ -81,6 +81,8 @@ function textSmall(text) {
     return data.radicals[text].small;
 }
 function textCompound(large, small) {
+    if (data.combos[large + "," + small] != undefined)
+        return data.combos[large + "," + small].default;
     return createCompound(textLarge(large), textSmall(small));
 }
 
@@ -155,11 +157,11 @@ function CCSStylesheetRuleStyle(stylesheet, selectorText, style, value){
 }
 
 function addSvg(paths) {
-    preview.innerHTML += c.pathsToSvg(paths);
+    return c.pathsToSvg(paths);
 }
 
 function addText(text) {
-    preview.innerHTML += "<span>" + text + "</span>";
+    return "<span>" + text + "</span>";
 }
 
 function parseWord(word) {
@@ -172,12 +174,13 @@ function parseWord(word) {
         "s":"⠁",
     };
     
+    if (word == "")
+        return "";
+    
     if (word[0] == "'") {
-        addText(word.substring(1));
-        return;
+        return addText(word.substring(1));
     } else if (word.length == 1 && punctuation[word[0]] !== undefined) {
-        addText(punctuation[word[0]]);
-        return;
+        return addText(punctuation[word[0]]);
     }
     
     var final = "";
@@ -219,16 +222,31 @@ function parseWord(word) {
         }
     }
     
-    addSvg([c.roundPath(final, 0.25)]);
-    //addSvg([final]);
+    return addSvg([c.roundPath(final, 0.25)]);
 }
 
+var cached_words = {};
+
 function inputChanged() {
-    preview.innerHTML = "";
+    var finalHTML = "";
     
-    character_input.value.split(" ").forEach(function (w) {
-        parseWord(w);
+    character_input.value.split("\n").forEach(function (l) {
+        l.split(" ").forEach(function (w) {
+            var parsed_word = '';
+            if (cached_words[w] == undefined) {
+                parsed_word = parseWord(w);
+                cached_words[w] = parsed_word;
+            } else {
+                parsed_word = cached_words[w];
+            }
+                
+            if (parsed_word != '')
+                finalHTML += parsed_word;
+        });
+        finalHTML += "<br>";
     });
+    
+    preview.innerHTML = finalHTML;
 }
 
 window.onload = function () {
@@ -328,8 +346,26 @@ module.exports={
             "small":"M 5 10 L 5 0 M 0 0 L 10 0"
         },
         "ch":{
-            "large":"M 5 10 L 5 0 M 0 0 L 10 0 M 0 10 L 10 10 M 7.5 10 L 7.5 7",
+            "large-comment":"M 5 10 L 5 0 M 0 0 L 10 0 M 0 10 L 10 10 M 7.5 10 L 7.5 7",
+            "large":"M 5 10 L 5 0 M 0 0 L 10 0 M 10 0 L 10 10",
             "small":"M 5 10 L 5 0 M 0 0 L 10 0 M 10 0 L 10 10"
+        }
+    },
+    "combos": {
+        "th,r": {
+            "default":"M 0 4 L 10 4 M 5 4 L 5 10 M 5 7 L 8 7 M 1 4 L 1 0 L 9 0 L 9 4"
+        },
+        "t,r": {
+            "default":"M 0 4 L 10 4 M 5 4 L 5 10 M 1 4 L 1 0 L 9 0 L 9 4"
+        },
+        "t,c": {
+            "default":"M 0 4 L 10 4 M 5 0 L 5 10 M 1 0 L 9 0"
+        },
+        "v,r": {
+            "default":"M 0 4 L 10 4 Q 10 8 0 8 M 5 7.5 L 5 10 M 1 4 L 1 0 L 9 0 L 9 4"
+        },
+        "v,c": {
+            "default":"M 0 3 L 10 3 Q 10 7 0 8 M 5 7 L 5 10 M 1 0 L 9 0 M 5 3 L 5 0"
         }
     },
     "markers": {

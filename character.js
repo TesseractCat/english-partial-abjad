@@ -78,6 +78,8 @@ function textSmall(text) {
     return data.radicals[text].small;
 }
 function textCompound(large, small) {
+    if (data.combos[large + "," + small] != undefined)
+        return data.combos[large + "," + small].default;
     return createCompound(textLarge(large), textSmall(small));
 }
 
