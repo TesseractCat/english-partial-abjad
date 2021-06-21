@@ -42,10 +42,22 @@ function mergePaths(a, b) {
     return a + " " + b;
 }
 
-function createCompound(large, small) {
-    return mergePaths(
+function createCompound(large, small, touching) {
+    /*return mergePaths(
         translatePath(scalePath(large, 1.0, 0.55), 0.0, 4.5),
         translatePath(scalePath(small, 0.9, 0.3), 0.5, 0.0)
+    );*/
+    return mergePaths(
+        translatePath(
+            scalePath(large, 1.0, touching ? 0.65 : 0.55), 0.0,
+            touching ? 3.5 : 4.5),
+        translatePath(scalePath(small, 0.9, 0.3), 0.5, 0.0)
+    );
+}
+function createCompoundInverse(large, small) {
+    return mergePaths(
+        translatePath(scalePath(large, 1.0, 0.65), 0.0, 0),
+        translatePath(scalePath(small, 0.9, 0.3), 0.5, 7.5)
     );
 }
 function createSplit(left, right) {
@@ -70,6 +82,12 @@ function addTopMarker(path, marker) {
         translatePath(scalePath(marker, 1.0, 1.0), 0.0, 0.0)
     );
 }
+function addModifier(path, modifier) {
+    return mergePaths(
+        path,
+        data.modifiers[modifier]
+    );
+}
 
 function textMarkerBottom(text) {
     return data.markers[text].bottom;
@@ -83,7 +101,10 @@ function textSmall(text) {
 function textCompound(large, small) {
     if (data.combos[large + "," + small] != undefined)
         return data.combos[large + "," + small].default;
-    return createCompound(textLarge(large), textSmall(small));
+    
+    var easy_combo = data.easy_combos.includes(large + "," + small);
+    
+    return createCompound(textLarge(large), textSmall(small), easy_combo);
 }
 
 function pathToSvg(path) {
@@ -91,8 +112,10 @@ function pathToSvg(path) {
     let svgStyle = " ";
     return "<path d='" + path + "' style='" + svgStyle + "' />";
 }
-function pathsToSvg(pathArr) {
-    let svgOut = "<svg viewBox='-1 -1 12 12' xmlns='http://www.w3.org/2000/svg'>";
+function pathsToSvg(pathArr, style) {
+    style = style || '';
+    let svgOut =
+        "<svg viewBox='-1 -1 12 12' xmlns='http://www.w3.org/2000/svg' style='" + style + "'>";
     for (var i = 0; i < pathArr.length; i++) {
         svgOut += pathToSvg(pathArr[i]);
     }
@@ -109,12 +132,14 @@ module.exports = {
     mergePaths,
     
     createCompound,
+    createCompoundInverse,
     createSmaller,
     createSplit,
     
     textMarkerBottom,
     addBottomMarker,
     addTopMarker,
+    addModifier,
     
     textLarge,
     textSmall,
@@ -661,8 +686,8 @@ function CCSStylesheetRuleStyle(stylesheet, selectorText, style, value){
         return CCSstyle[style] = value
 }
 
-function addSvg(paths) {
-    return c.pathsToSvg(paths);
+function addSvg(paths, style) {
+    return c.pathsToSvg(paths, style);
 }
 
 function addText(text) {
@@ -676,7 +701,7 @@ function parseWord(word) {
         "!":"！",
         "?":"？",
         "-":"-",
-        "s":"⠁",
+        //"s":"⠁",
     };
     
     if (word == "")
@@ -689,6 +714,7 @@ function parseWord(word) {
     }
     
     var final = "";
+    var style = "";
     
     var info = word.split(";");
     
@@ -698,9 +724,12 @@ function parseWord(word) {
     radicals.forEach(function (r) {
         var components = r.split(",");
         var p;
-        if (components.length == 2) {
+        if (components.length == 3) {
             p = c.textCompound(components[0], components[1]);
-        } else {
+            p = c.createCompoundInverse(p, c.textSmall(components[2]));
+        } else if (components.length == 2) {
+            p = c.textCompound(components[0], components[1]);
+        } else if (components.length == 1) {
             p = c.textLarge(components[0]);
         }
         
@@ -717,17 +746,34 @@ function parseWord(word) {
         final = c.createSplit(compounds[0], compounds[1]);
     }
     
+    var to_add_modifiers = [];
     if (info.length == 2) {
         markers = info[1].split(",");
-        if (markers[0] != '')
+        if (markers[0] != '') {
+            if (markers[0].startsWith('.')) {
+                to_add_modifiers.push("bottomLast");
+                style += "margin-right: 5px;";
+                markers[0] = markers[0].substring(1);
+            }
             final = c.addBottomMarker(final, c.textMarkerBottom(markers[0]));
+        }
         if (markers.length == 2) {
-            if (markers[1] != '')
+            if (markers[1].startsWith('.')) {
+                to_add_modifiers.push("topLast");
+                style += "margin-right: 5px;";
+                markers[1] = markers[1].substring(1);
+            }
+            if (markers[1] != '') {
                 final = c.addTopMarker(final, c.textMarkerBottom(markers[1]));
+            }
         }
     }
     
-    return addSvg([c.roundPath(final, 0.25)]);
+    to_add_modifiers.forEach(function (m) {
+        final = c.addModifier(final, m);
+    });
+    
+    return addSvg([c.roundPath(final, 0.25)], style);
 }
 
 var cached_words = {};
@@ -742,8 +788,12 @@ function inputChanged() {
             
             var parsed_word = '';
             if (cached_words[w] == undefined) {
-                parsed_word = parseWord(w);
-                cached_words[w] = parsed_word;
+                try {
+                    parsed_word = parseWord(w);
+                    cached_words[w] = parsed_word;
+                } catch (err) {
+                    return;
+                }
             } else {
                 parsed_word = cached_words[w];
             }
@@ -794,8 +844,8 @@ module.exports={
             "small":"M 0 10 L 0 0 L 10 0 L 10 10 M 0 10 L 10 10"
         },
         "d":{
-            "large":"M 0.5 0 L 10 0 Q 10 8 0 10 M -0.5 1.5 L 1.5 -1.5",
-            "small":"M 0 10 L 0 0 M 0 5 L 10 5 L 10 10"
+            "large":"M 0.5 0 L 10 0 Q 10 8 0 10 M -1 3 Q 1 0 1 -3",
+            "small":"M 0 10 L 0 0 M 0 5 L 10 5 L 10 12"
         },
         "l":{
             "large":"M 5 10 L 5 0",
@@ -806,15 +856,17 @@ module.exports={
             "small":"M 5 10 L 5 0 M 0 0 L 10 0 M 0 10 L 10 10"
         },
         "m":{
-            "large":"M 5.5 6 L 0.5 6 M 0.5 6 L 6.5 0 M 1.5 10 L 7.5 4 M 1.5 10 L 9.5 10",
-            "small":"M 9 0 L 1 5 L 9 10"
+            "large-comment":"M 5.5 6 L 0.5 6 M 0.5 6 L 6.5 0 M 1.5 10 L 7.5 4 M 1.5 10 L 9.5 10",
+            "small-comment":"M 9 0 L 1 5 L 9 10",
+            "large":"M 5 10 L 5 0 M 0 0 L 10 0 M 0 0 L 0 10",
+            "small":"M 5 10 L 5 0 M 0 0 L 10 0 M 0 0 L 0 10"
         },
         "v":{
             "large":"M 0 0 L 10 0 Q 10 5 0 5 M 5 4.5 L 5 10",
             "small":"M 0 1 L 5 9 L 10 1"
         },
         "b":{
-            "large":"M 0 10 L 0 0 L 10 0 L 10 10",
+            "large":"M 1 10 L 1 0 L 9 0 L 9 10",
             "small":"M 0 2 L 3 8 M 10 2 L 7 8"
         },
         "f":{
@@ -869,6 +921,9 @@ module.exports={
         "t,c": {
             "default":"M 0 4 L 10 4 M 5 0 L 5 10 M 1 0 L 9 0"
         },
+        "p,r": {
+            "default":"M 5 0 L 5 5 Q 5 10 1 10 M 0 5 L 0 0 L 10 0 L 10 5 M 0 4 L 10 4"
+        },
         "v,r": {
             "default":"M 0 4 L 10 4 Q 10 8 0 8 M 5 7.5 L 5 10 M 1 4 L 1 0 L 9 0 L 9 4"
         },
@@ -877,15 +932,69 @@ module.exports={
         },
         "f,r": {
             "default":"M 5 10 L 5 2 L 10 2 M 0 7 L 10 7 M 0 4 L 0 0 L 10 0 L 10 4 L 0 4"
+        },
+        "r,c": {
+            "default":"M 0 10 L 0 0 L 10 0 L 10 10 M 0 8 L 10 8 M 0 2 L 10 2 M 5 2 L 5 6 M 0 6 L 10 6"
+        },
+        "r,n": {
+            "default":"M 0 10 L 0 0 L 10 0 L 10 10 M 0 8 L 10 8 M 5 8 L 5 3 L 10 3"
+        },
+        "r,s": {
+            "default":"M 0 10 L 0 0 L 10 0 L 10 10 M 0 8 L 10 8 M 5 8 L 5 3 L 0 3"
+        },
+        "r,d": {
+            "default":"M 0 10 L 0 0 L 10 0 L 10 10 M 0 8 L 10 8 M 3 4 L 7 4 M 3 2 L 3 6 M 7 4 L 7 8"
+        },
+        "r,t": {
+            "default":"M 0 10 L 0 0 L 10 0 L 10 10 M 0 8 L 10 8 M 0 3 L 10 3 M 5 3 L 5 8"
+        },
+        "r,l": {
+            "default":"M 0 10 L 0 0 L 10 0 L 10 10 M 0 8 L 10 8 M 3 6 L 7 2"
+        },
+        "r,p": {
+            "default":"M 0 10 L 0 0 L 10 0 L 10 10 M 0 8 L 10 8 M 7 6 L 3 2"
+        },
+        "n,g": {
+            "default":"M 0 10 L 0 4 L 10 4 M 5 4 L 5 0"
+        },
+        "n,d": {
+            "default":"M 0 10 L 0 5 L 10 5 M 2 5 L 2 0 M 2 2.5 L 8 2.5 L 8 5"
+        },
+        "c,r": {
+            "default":"M 5 10 L 5 4 M 0 4 L 10 4 M 0 10 L 10 10 M 1 4 L 1 0 L 9 0 L 9 4"
+        },
+        "b,r": {
+            "default":"M 0 10 L 0 0 L 10 0 L 10 10 M 2 8 L 2 2 L 8 2 L 8 8 L 2 8"
+        },
+        "b,l": {
+            "default":"M 0 10 L 0 0 L 10 0 L 10 10 M 3 7 L 7 3"
+        },
+        "sh,n": {
+            "default":"M 0 4 L 10 4 M 5 4 Q 5 8 0 10 M 1 0 L 9 0 L 9 4"
+        },
+        "l,n": {
+            "default":"M 0 5 L 0 0 L 10 0 M 5 10 L 5 0"
+        },
+        "l,s": {
+            "default":"M 10 5 L 10 0 L 0 0 M 5 10 L 5 0"
         }
-
     },
+    "easy_combos":
+        [ "s,n", "s,s", "c,n", "c,s", "t,n", "t,s", "l,f", "c,sh", "j,r", "l,r", "r,sh",
+            "g,v", "j,n", "p,n", "p,s", "n,sh", "v,th", "d,s", "r,th", "m,p", "m,l", "g,f",
+            "m,s", "m,n", "m,sh", "n,th", "g,r", "g,j", "j,s"],
     "markers": {
         "ay":{
             "bottom":"M 1.5 0 L 0 2 M 8.5 0 L 10 2 M 3 0 L 3 2 L 7 2 L 7 0"
         },
         "ah":{
             "bottom":"M 2 0 L 0.5 2 M 8 0 L 9.5 2 M 5 0 L 5 2"
+        },
+        "au":{
+            "bottom":"M 0 0 L 0 2 L 10 2"
+        },
+        "oi":{
+            "bottom":"M 0 2 L 0 2 L 10 2 L 10 0"
         },
         "oo": {
             "bottom":"M 1.5 0 L 0 2 M 8.5 0 L 10 2 M 3 0 L 3 2 L 7 2 L 7 0 M 5 -0.5 L 5 1.5"
@@ -903,17 +1012,23 @@ module.exports={
             "bottom":"M 5 0 L 5 2"
         },
         "eh":{
-            "bottom":"M 2 0 L 5 1.5 M 8.5 0 L 10 2 M 0 0 L 0 2 L 7 2 L 7 0"
-        },
-        "ee":{
-            "bottom":"M 1 0 L 3 1.5 M 4 0 L 6 1.5 M 8.5 0 L 10 2 M 0 0 L 0 2 L 7 2 L 7 0"
+            "bottom":"M 3.5 0 L 6.5 1.5 M 1 0 L 1 2 L 9 2 L 9 0"
         },
         "uh":{
+            "bottom-comment":"M 1 0 L 3 1.5 M 4 0 L 6 1.5 M 8.5 0 L 10 2 M 0 0 L 0 2 L 7 2 L 7 0",
+            "bottom":"M 1 0 L 1 2 L 9 2 L 9 0"
+        },
+        "ee":{
             "bottom":"M 0 1 L 10 1"
         },
         "#":{
             "bottom":"M 0 1 L 4 1 M 6 1 L 10 1 M 5 -1 L 5 3"
         }
+    },
+    "modifiers": {
+        "plural": "M 11 2 L 11 3",
+        "topLast": "M 11 1 L 13 1",
+        "bottomLast": "M 11 9 L 13 9"
     }
 }
 

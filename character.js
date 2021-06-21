@@ -39,10 +39,22 @@ function mergePaths(a, b) {
     return a + " " + b;
 }
 
-function createCompound(large, small) {
-    return mergePaths(
+function createCompound(large, small, touching) {
+    /*return mergePaths(
         translatePath(scalePath(large, 1.0, 0.55), 0.0, 4.5),
         translatePath(scalePath(small, 0.9, 0.3), 0.5, 0.0)
+    );*/
+    return mergePaths(
+        translatePath(
+            scalePath(large, 1.0, touching ? 0.65 : 0.55), 0.0,
+            touching ? 3.5 : 4.5),
+        translatePath(scalePath(small, 0.9, 0.3), 0.5, 0.0)
+    );
+}
+function createCompoundInverse(large, small) {
+    return mergePaths(
+        translatePath(scalePath(large, 1.0, 0.65), 0.0, 0),
+        translatePath(scalePath(small, 0.9, 0.3), 0.5, 7.5)
     );
 }
 function createSplit(left, right) {
@@ -67,6 +79,12 @@ function addTopMarker(path, marker) {
         translatePath(scalePath(marker, 1.0, 1.0), 0.0, 0.0)
     );
 }
+function addModifier(path, modifier) {
+    return mergePaths(
+        path,
+        data.modifiers[modifier]
+    );
+}
 
 function textMarkerBottom(text) {
     return data.markers[text].bottom;
@@ -80,7 +98,10 @@ function textSmall(text) {
 function textCompound(large, small) {
     if (data.combos[large + "," + small] != undefined)
         return data.combos[large + "," + small].default;
-    return createCompound(textLarge(large), textSmall(small));
+    
+    var easy_combo = data.easy_combos.includes(large + "," + small);
+    
+    return createCompound(textLarge(large), textSmall(small), easy_combo);
 }
 
 function pathToSvg(path) {
@@ -88,8 +109,10 @@ function pathToSvg(path) {
     let svgStyle = " ";
     return "<path d='" + path + "' style='" + svgStyle + "' />";
 }
-function pathsToSvg(pathArr) {
-    let svgOut = "<svg viewBox='-1 -1 12 12' xmlns='http://www.w3.org/2000/svg'>";
+function pathsToSvg(pathArr, style) {
+    style = style || '';
+    let svgOut =
+        "<svg viewBox='-1 -1 12 12' xmlns='http://www.w3.org/2000/svg' style='" + style + "'>";
     for (var i = 0; i < pathArr.length; i++) {
         svgOut += pathToSvg(pathArr[i]);
     }
@@ -106,12 +129,14 @@ module.exports = {
     mergePaths,
     
     createCompound,
+    createCompoundInverse,
     createSmaller,
     createSplit,
     
     textMarkerBottom,
     addBottomMarker,
     addTopMarker,
+    addModifier,
     
     textLarge,
     textSmall,
