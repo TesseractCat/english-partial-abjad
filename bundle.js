@@ -991,16 +991,16 @@ module.exports={
             "bottom":"M 2 0 L 0.5 2 M 8 0 L 9.5 2 M 5 0 L 5 2"
         },
         "au":{
-            "bottom":"M 0 0 L 0 2 L 10 2"
+            "bottom":"M 1 0 L 1 2 L 9 2"
         },
         "oi":{
-            "bottom":"M 0 2 L 0 2 L 10 2 L 10 0"
+            "bottom":"M 2 0 L 0.5 2 M 8 0 L 9.5 2 M 4 0 L 4 2 M 6 0 L 6 2"
         },
         "oo": {
             "bottom":"M 1.5 0 L 0 2 M 8.5 0 L 10 2 M 3 0 L 3 2 L 7 2 L 7 0 M 5 -0.5 L 5 1.5"
         },
         "ow":{
-            "bottom":"M 2 0 L 0.5 2 M 8 0 L 9.5 2 M 4 0 L 4 2 M 6 0 L 6 2"
+            "bottom":"M 1 2 L 1 2 L 9 2 L 9 0"
         },
         "oh":{
             "bottom":"M 0 1 L 4 1 M 6 1 L 10 1"

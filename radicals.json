@@ -157,42 +157,46 @@
             "g,v", "j,n", "p,n", "p,s", "n,sh", "v,th", "d,s", "r,th", "m,p", "m,l", "g,f",
             "m,s", "m,n", "m,sh", "n,th", "g,r", "g,j", "j,s"],
     "markers": {
-        "ay":{
-            "bottom":"M 1.5 0 L 0 2 M 8.5 0 L 10 2 M 3 0 L 3 2 L 7 2 L 7 0"
-        },
-        "ah":{
-            "bottom":"M 2 0 L 0.5 2 M 8 0 L 9.5 2 M 5 0 L 5 2"
-        },
-        "au":{
-            "bottom":"M 0 0 L 0 2 L 10 2"
-        },
-        "oi":{
-            "bottom":"M 0 2 L 0 2 L 10 2 L 10 0"
-        },
-        "oo": {
-            "bottom":"M 1.5 0 L 0 2 M 8.5 0 L 10 2 M 3 0 L 3 2 L 7 2 L 7 0 M 5 -0.5 L 5 1.5"
-        },
-        "ow":{
-            "bottom":"M 2 0 L 0.5 2 M 8 0 L 9.5 2 M 4 0 L 4 2 M 6 0 L 6 2"
-        },
-        "oh":{
-            "bottom":"M 0 1 L 4 1 M 6 1 L 10 1"
+        "ai":{
+            "bottom":"M 5 0 L 5 2"
         },
         "ih":{
             "bottom":"M 4 0 L 2 2 M 6 0 L 8 2"
         },
-        "ai":{
-            "bottom":"M 5 0 L 5 2"
+        "ah":{
+            "bottom":"M 2 0 L 0.5 2 M 8 0 L 9.5 2 M 5 0 L 5 2"
         },
-        "eh":{
-            "bottom":"M 3.5 0 L 6.5 1.5 M 1 0 L 1 2 L 9 2 L 9 0"
+        "oi":{
+            "bottom":"M 2 0 L 0.5 2 M 8 0 L 9.5 2 M 4 0 L 4 2 M 6 0 L 6 2"
         },
+        
         "uh":{
             "bottom-comment":"M 1 0 L 3 1.5 M 4 0 L 6 1.5 M 8.5 0 L 10 2 M 0 0 L 0 2 L 7 2 L 7 0",
             "bottom":"M 1 0 L 1 2 L 9 2 L 9 0"
         },
+        "eh":{
+            "bottom":"M 3.5 0 L 6.5 1.5 M 1 0 L 1 2 L 9 2 L 9 0"
+        },
+        
+        "ay":{
+            "bottom":"M 1.5 0 L 0 2 M 8.5 0 L 10 2 M 3 0 L 3 2 L 7 2 L 7 0"
+        },
+        "oo": {
+            "bottom":"M 1.5 0 L 0 2 M 8.5 0 L 10 2 M 3 0 L 3 2 L 7 2 L 7 0 M 5 -0.5 L 5 1.5"
+        },
+        
+        "au":{
+            "bottom":"M 1 0 L 1 2 L 9 2"
+        },
+        "ow":{
+            "bottom":"M 1 2 L 1 2 L 9 2 L 9 0"
+        },
+        
         "ee":{
             "bottom":"M 0 1 L 10 1"
+        },
+        "oh":{
+            "bottom":"M 0 1 L 4 1 M 6 1 L 10 1"
         },
         "#":{
             "bottom":"M 0 1 L 4 1 M 6 1 L 10 1 M 5 -1 L 5 3"
