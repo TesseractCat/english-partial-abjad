@@ -14,10 +14,10 @@ function CCSStylesheetRuleStyle(stylesheet, selectorText, style, value){
     * string style: camelCase element style, e.g. 'fontSize'
     * string value optionnal : the new value
     */
-    var CCSstyle = undefined, rules;
+    let CCSstyle = undefined, rules;
     
     rules = document.styleSheets[stylesheet][document.all ? 'rules' : 'cssRules'];
-    for(var n in rules){
+    for(let n in rules){
         if(rules[n].selectorText == selectorText){
             CCSstyle = rules[n].style;
             break;
@@ -39,13 +39,12 @@ function addText(text) {
 }
 
 function parseWord(word) {
-    var punctuation = {
+    let punctuation = {
         ".":"。",
         ",":"，",
         "!":"！",
         "?":"？",
         "-":"-",
-        //"s":"⠁",
     };
     
     if (word == "")
@@ -57,17 +56,17 @@ function parseWord(word) {
         return addText(punctuation[word[0]]);
     }
     
-    var final = "";
-    var style = "";
+    let final = "";
+    let style = "";
     
-    var info = word.split(";");
+    let info = word.split(";");
     
-    var radicals = info[0].split("'");
+    let radicals = info[0].split("'");
     
-    var compounds = [];
+    let compounds = [];
     radicals.forEach(function (r) {
-        var components = r.split(",");
-        var p;
+        let components = r.split(",");
+        let p;
         if (components.length == 3) {
             p = c.textCompound(components[0], components[1]);
             p = c.createCompoundInverse(p, c.textSmall(components[2]));
@@ -90,60 +89,45 @@ function parseWord(word) {
         final = c.createSplit(compounds[0], compounds[1]);
     }
     
-    var to_add_modifiers = [];
     if (info.length == 2) {
         markers = info[1].split(",");
         if (markers[0] != '') {
-            if (markers[0].startsWith('.')) {
-                to_add_modifiers.push("bottomLast");
-                style += "margin-right: 5px;";
-                markers[0] = markers[0].substring(1);
-            }
             final = c.addBottomMarker(final, c.textMarkerBottom(markers[0]));
         }
         if (markers.length == 2) {
-            if (markers[1].startsWith('.')) {
-                to_add_modifiers.push("topLast");
-                style += "margin-right: 5px;";
-                markers[1] = markers[1].substring(1);
-            }
             if (markers[1] != '') {
                 final = c.addTopMarker(final, c.textMarkerBottom(markers[1]));
             }
         }
     }
     
-    to_add_modifiers.forEach(function (m) {
-        final = c.addModifier(final, m);
-    });
-    
     return addSvg([c.roundPath(final, 0.25)], style);
 }
 
-var cached_words = {};
+let cachedWords = {};
 
 function inputChanged() {
-    var finalHTML = "";
+    let finalHTML = "";
     
-    character_input.value.split("\n").forEach(function (l) {
+    characterInput.value.split("\n").forEach(function (l) {
         l.split(" ").forEach(function (w) {
             if (dictionary[w] != undefined)
                 w = dictionary[w];
             
-            var parsed_word = '';
-            if (cached_words[w] == undefined) {
+            let parsedWord = '';
+            if (cachedWords[w] == undefined) {
                 try {
-                    parsed_word = parseWord(w);
-                    cached_words[w] = parsed_word;
+                    parsedWord = parseWord(w);
+                    cachedWords[w] = parsedWord;
                 } catch (err) {
                     return;
                 }
             } else {
-                parsed_word = cached_words[w];
+                parsedWord = cachedWords[w];
             }
                 
-            if (parsed_word != '')
-                finalHTML += parsed_word;
+            if (parsedWord != '')
+                finalHTML += parsedWord;
         });
         finalHTML += "<br>";
     });
@@ -152,14 +136,14 @@ function inputChanged() {
 }
 
 window.onload = function () {
-    character_input.addEventListener("keyup", inputChanged);
+    characterInput.addEventListener("keyup", inputChanged);
     inputChanged();
     
     const updatePixelRatio = () => {
         let pr = window.devicePixelRatio;
         
-        var stroke_width = 1/(window.devicePixelRatio || 1);
-        CCSStylesheetRuleStyle(0, "path", "stroke-width", stroke_width.toString() + "px");
+        let strokeWidth = 1/(window.devicePixelRatio || 1);
+        CCSStylesheetRuleStyle(0, "path", "stroke-width", strokeWidth.toString() + "px");
         
         matchMedia(`(resolution: ${pr}dppx)`).addEventListener("change", updatePixelRatio, { once: true })
     }

@@ -83,115 +83,125 @@
       "large-comment": "M 5 10 L 5 0 M 0 0 L 10 0 M 0 10 L 10 10 M 7.5 10 L 7.5 7",
       large: "M 5 10 L 5 0 M 0 0 L 10 0 M 10 0 L 10 10",
       small: "M 5 10 L 5 0 M 0 0 L 10 0 M 10 0 L 10 10"
+    },
+    tL: {
+      large: "M 6 1 Q 1 0 1 5 Q 1 10 10 8",
+      small: ""
+    },
+    bL: {
+      large: "M 6 1 Q 1 0 1 5 Q 1 10 10 8 M 7 3 L 7 6",
+      small: ""
+    },
+    tbL: {
+      large: "M 6 1 Q 1 0 1 5 Q 1 10 10 8 M 6 1 Q 8 5 4 8.5",
+      small: ""
     }
   };
   var combos = {
-    "th,r": {
-      default: "M 0 4 L 10 4 M 5 4 L 5 10 M 5 7 L 9 7 M 1 4 L 1 0 L 9 0 L 9 4"
+    th: {
+      r: "M 0 4 L 10 4 M 5 4 L 5 10 M 5 7 L 9 7 M 1 4 L 1 0 L 9 0 L 9 4"
     },
-    "t,r": {
-      default: "M 0 4 L 10 4 M 5 4 L 5 10 M 1 4 L 1 0 L 9 0 L 9 4"
+    t: {
+      r: "M 0 4 L 10 4 M 5 4 L 5 10 M 1 4 L 1 0 L 9 0 L 9 4",
+      c: "M 0 4 L 10 4 M 5 0 L 5 10 M 1 0 L 9 0"
     },
-    "t,c": {
-      default: "M 0 4 L 10 4 M 5 0 L 5 10 M 1 0 L 9 0"
+    p: {
+      r: "M 5 0 L 5 5 Q 5 10 1 10 M 0 5 L 0 0 L 10 0 L 10 5 M 0 4 L 10 4"
     },
-    "p,r": {
-      default: "M 5 0 L 5 5 Q 5 10 1 10 M 0 5 L 0 0 L 10 0 L 10 5 M 0 4 L 10 4"
+    v: {
+      r: "M 0 4 L 10 4 Q 10 8 0 8 M 5 7.5 L 5 10 M 1 4 L 1 0 L 9 0 L 9 4",
+      c: "M 0 3 L 10 3 Q 10 7 0 8 M 5 7 L 5 10 M 1 0 L 9 0 M 5 3 L 5 0"
     },
-    "v,r": {
-      default: "M 0 4 L 10 4 Q 10 8 0 8 M 5 7.5 L 5 10 M 1 4 L 1 0 L 9 0 L 9 4"
+    f: {
+      r: "M 5 10 L 5 2 L 10 2 M 0 7 L 10 7 M 0 4 L 0 0 L 10 0 L 10 4 L 0 4"
     },
-    "v,c": {
-      default: "M 0 3 L 10 3 Q 10 7 0 8 M 5 7 L 5 10 M 1 0 L 9 0 M 5 3 L 5 0"
+    r: {
+      c: "M 0 10 L 0 0 L 10 0 L 10 10 M 0 8 L 10 8 M 0 2 L 10 2 M 5 2 L 5 6 M 0 6 L 10 6",
+      n: "M 0 10 L 0 0 L 10 0 L 10 10 M 0 8 L 10 8 M 5 8 L 5 3 L 10 3",
+      s: "M 0 10 L 0 0 L 10 0 L 10 10 M 0 8 L 10 8 M 5 8 L 5 3 L 0 3",
+      d: "M 0 10 L 0 0 L 10 0 L 10 10 M 0 8 L 10 8 M 3 4 L 7 4 M 3 2 L 3 6 M 7 4 L 7 8",
+      t: "M 0 10 L 0 0 L 10 0 L 10 10 M 0 8 L 10 8 M 0 4 L 10 4",
+      l: "M 0 10 L 0 0 L 10 0 L 10 10 M 0 8 L 10 8 M 3 6 L 7 2",
+      p: "M 0 10 L 0 0 L 10 0 L 10 10 M 0 8 L 10 8 M 7 6 L 3 2"
     },
-    "f,r": {
-      default: "M 5 10 L 5 2 L 10 2 M 0 7 L 10 7 M 0 4 L 0 0 L 10 0 L 10 4 L 0 4"
+    n: {
+      g: "M 0 10 L 0 4 L 10 4 M 5 4 L 5 0",
+      d: "M 0 10 L 0 5 L 10 5 M 2 5 L 2 0 M 2 2.5 L 8 2.5 L 8 5",
+      s: "M 0 4 L 10 4 M 1 0 L 9 0 L 9 4 M 0 10 L 0 4",
+      n: "M 0 4 L 10 4 M 9 0 L 1 0 L 1 4 M 0 10 L 0 4"
     },
-    "r,c": {
-      default: "M 0 10 L 0 0 L 10 0 L 10 10 M 0 8 L 10 8 M 0 2 L 10 2 M 5 2 L 5 6 M 0 6 L 10 6"
+    c: {
+      r: "M 5 10 L 5 4 M 0 4 L 10 4 M 0 10 L 10 10 M 1 4 L 1 0 L 9 0 L 9 4"
     },
-    "r,n": {
-      default: "M 0 10 L 0 0 L 10 0 L 10 10 M 0 8 L 10 8 M 5 8 L 5 3 L 10 3"
+    b: {
+      r: "M 0 10 L 0 0 L 10 0 L 10 10 M 2 8 L 2 2 L 8 2 L 8 8 L 2 8",
+      l: "M 0 10 L 0 0 L 10 0 L 10 10 M 3 7 L 7 3",
+      t: "M 0 10 L 0 0 L 10 0 L 10 10 M 0 5 L 10 5",
+      th: "M 0 10 L 0 0 L 10 0 L 10 10 M 0 3 L 10 3 M 5 3 L 5 9 M 5 6 L 8 6"
     },
-    "r,s": {
-      default: "M 0 10 L 0 0 L 10 0 L 10 10 M 0 8 L 10 8 M 5 8 L 5 3 L 0 3"
+    sh: {
+      s: "M 0 4 L 10 4 M 5 4 Q 5 8 0 10 M 1 0 L 9 0 L 9 4",
+      n: "M 0 4 L 10 4 M 5 4 Q 5 8 0 10 M 9 0 L 1 0 L 1 4"
     },
-    "r,d": {
-      default: "M 0 10 L 0 0 L 10 0 L 10 10 M 0 8 L 10 8 M 3 4 L 7 4 M 3 2 L 3 6 M 7 4 L 7 8"
+    l: {
+      n: "M 0 5 L 0 0 L 10 0 M 5 10 L 5 0",
+      s: "M 10 5 L 10 0 L 0 0 M 5 10 L 5 0"
     },
-    "r,t": {
-      default: "M 0 10 L 0 0 L 10 0 L 10 10 M 0 8 L 10 8 M 0 3 L 10 3 M 5 3 L 5 8"
-    },
-    "r,l": {
-      default: "M 0 10 L 0 0 L 10 0 L 10 10 M 0 8 L 10 8 M 3 6 L 7 2"
-    },
-    "r,p": {
-      default: "M 0 10 L 0 0 L 10 0 L 10 10 M 0 8 L 10 8 M 7 6 L 3 2"
-    },
-    "n,g": {
-      default: "M 0 10 L 0 4 L 10 4 M 5 4 L 5 0"
-    },
-    "n,d": {
-      default: "M 0 10 L 0 5 L 10 5 M 2 5 L 2 0 M 2 2.5 L 8 2.5 L 8 5"
-    },
-    "n,s": {
-      default: "M 0 4 L 10 4 M 1 0 L 9 0 L 9 4 M 0 10 L 0 4"
-    },
-    "n,n": {
-      default: "M 0 4 L 10 4 M 9 0 L 1 0 L 1 4 M 0 10 L 0 4"
-    },
-    "c,r": {
-      default: "M 5 10 L 5 4 M 0 4 L 10 4 M 0 10 L 10 10 M 1 4 L 1 0 L 9 0 L 9 4"
-    },
-    "b,r": {
-      default: "M 0 10 L 0 0 L 10 0 L 10 10 M 2 8 L 2 2 L 8 2 L 8 8 L 2 8"
-    },
-    "b,l": {
-      default: "M 0 10 L 0 0 L 10 0 L 10 10 M 3 7 L 7 3"
-    },
-    "sh,s": {
-      default: "M 0 4 L 10 4 M 5 4 Q 5 8 0 10 M 1 0 L 9 0 L 9 4"
-    },
-    "sh,n": {
-      default: "M 0 4 L 10 4 M 5 4 Q 5 8 0 10 M 9 0 L 1 0 L 1 4"
-    },
-    "l,n": {
-      default: "M 0 5 L 0 0 L 10 0 M 5 10 L 5 0"
-    },
-    "l,s": {
-      default: "M 10 5 L 10 0 L 0 0 M 5 10 L 5 0"
+    d: {
+      r: "M 0.5 0 L 10 0 Q 10 8 0 10 M -1 3 Q 1 0 1 -3 M 1 -3 L 8 -3 L 8 0"
     }
   };
-  var easy_combos = [
+  var easyCombos = [
     "s,n",
     "s,s",
+    "s,m",
+    "s,ch",
     "c,n",
     "c,s",
+    "c,sh",
     "t,n",
     "t,s",
+    "b,n",
+    "b,s",
     "l,f",
-    "c,sh",
-    "j,r",
     "l,r",
-    "r,sh",
-    "g,v",
+    "j,r",
     "j,n",
+    "j,s",
+    "r,sh",
+    "r,th",
+    "r,m",
+    "r,ch",
+    "g,v",
+    "g,f",
+    "g,r",
+    "g,j",
     "p,n",
     "p,s",
+    "p,l",
+    "p,p",
     "n,sh",
+    "n,th",
+    "n,m",
+    "n,ch",
+    "n,j",
     "v,th",
+    "v,l",
+    "v,n",
+    "v,p",
     "d,s",
-    "r,th",
     "m,p",
     "m,l",
-    "g,f",
     "m,s",
     "m,n",
     "m,sh",
-    "n,th",
-    "g,r",
-    "g,j",
-    "j,s"
+    "m,th",
+    "m,m",
+    "m,j",
+    "th,n",
+    "th,s",
+    "sh,n",
+    "sh,s"
   ];
   var markers2 = {
     ai: {
@@ -236,14 +246,12 @@
     }
   };
   var modifiers = {
-    plural: "M 11 2 L 11 3",
-    topLast: "M 11 1 L 13 1",
-    bottomLast: "M 11 9 L 13 9"
+    plural: "M 11 2 L 11 3"
   };
   var radicals_default = {
     radicals,
     combos,
-    easy_combos,
+    easyCombos,
     markers: markers2,
     modifiers
   };
@@ -265,7 +273,7 @@
   }
   function roundPath(path, step2) {
     step2 || (step2 = 1);
-    var inv = 1 / step2;
+    let inv = 1 / step2;
     return executeOnPoints(path, function(p) {
       p.x = Math.round(p.x * inv) / inv;
       p.y = Math.round(p.y * inv) / inv;
@@ -292,7 +300,7 @@
     return mergePaths(scalePath(left2, 0.45, 1), translatePath(scalePath(right2, 0.4, 1), 6, 0));
   }
   function createSmaller(path, sf) {
-    var t = (10 - sf * 10) / 2;
+    let t = (10 - sf * 10) / 2;
     return translatePath(scalePath(path, sf, sf), t, t);
   }
   function addBottomMarker(path, marker) {
@@ -300,9 +308,6 @@
   }
   function addTopMarker(path, marker) {
     return mergePaths(translatePath(scalePath(path, 0.9, 0.7), 0.5, 3), translatePath(scalePath(marker, 1, 1), 0, 0));
-  }
-  function addModifier(path, modifier) {
-    return mergePaths(path, radicals_default.modifiers[modifier]);
   }
   function textMarkerBottom(text) {
     return radicals_default.markers[text].bottom;
@@ -314,10 +319,10 @@
     return radicals_default.radicals[text].small;
   }
   function textCompound(large2, small2) {
-    if (radicals_default.combos[large2 + "," + small2] != void 0)
-      return radicals_default.combos[large2 + "," + small2].default;
-    var easy_combo = radicals_default.easy_combos.includes(large2 + "," + small2);
-    return createCompound(textLarge(large2), textSmall(small2), easy_combo);
+    if (radicals_default.combos[large2]?.[small2] != void 0)
+      return radicals_default.combos[large2][small2];
+    let easyCombo = radicals_default.easyCombos.includes(large2 + "," + small2);
+    return createCompound(textLarge(large2), textSmall(small2), easyCombo);
   }
   function pathToSvg(path) {
     let svgStyle = " ";
@@ -326,7 +331,7 @@
   function pathsToSvg(pathArr, style) {
     style = style || "";
     let svgOut = "<svg viewBox='-1 -1 12 12' xmlns='http://www.w3.org/2000/svg' style='" + style + "'>";
-    for (var i = 0; i < pathArr.length; i++) {
+    for (let i = 0; i < pathArr.length; i++) {
       svgOut += pathToSvg(pathArr[i]);
     }
     svgOut += "</svg>";
@@ -1337,9 +1342,9 @@
 
   // main.js
   function CCSStylesheetRuleStyle(stylesheet, selectorText, style, value) {
-    var CCSstyle = void 0, rules;
+    let CCSstyle = void 0, rules;
     rules = document.styleSheets[stylesheet][document.all ? "rules" : "cssRules"];
-    for (var n in rules) {
+    for (let n in rules) {
       if (rules[n].selectorText == selectorText) {
         CCSstyle = rules[n].style;
         break;
@@ -1357,7 +1362,7 @@
     return "<span>" + text + "</span>";
   }
   function parseWord(word2) {
-    var punctuation = {
+    let punctuation = {
       ".": "\u3002",
       ",": "\uFF0C",
       "!": "\uFF01",
@@ -1371,14 +1376,14 @@
     } else if (word2.length == 1 && punctuation[word2[0]] !== void 0) {
       return addText(punctuation[word2[0]]);
     }
-    var final2 = "";
-    var style = "";
-    var info = word2.split(";");
-    var radicals2 = info[0].split("'");
-    var compounds = [];
+    let final2 = "";
+    let style = "";
+    let info = word2.split(";");
+    let radicals2 = info[0].split("'");
+    let compounds = [];
     radicals2.forEach(function(r) {
-      var components = r.split(",");
-      var p;
+      let components = r.split(",");
+      let p;
       if (components.length == 3) {
         p = textCompound(components[0], components[1]);
         p = createCompoundInverse(p, textSmall(components[2]));
@@ -1397,65 +1402,51 @@
     } else if (compounds.length >= 2) {
       final2 = createSplit(compounds[0], compounds[1]);
     }
-    var to_add_modifiers = [];
     if (info.length == 2) {
       markers = info[1].split(",");
       if (markers[0] != "") {
-        if (markers[0].startsWith(".")) {
-          to_add_modifiers.push("bottomLast");
-          style += "margin-right: 5px;";
-          markers[0] = markers[0].substring(1);
-        }
         final2 = addBottomMarker(final2, textMarkerBottom(markers[0]));
       }
       if (markers.length == 2) {
-        if (markers[1].startsWith(".")) {
-          to_add_modifiers.push("topLast");
-          style += "margin-right: 5px;";
-          markers[1] = markers[1].substring(1);
-        }
         if (markers[1] != "") {
           final2 = addTopMarker(final2, textMarkerBottom(markers[1]));
         }
       }
     }
-    to_add_modifiers.forEach(function(m) {
-      final2 = addModifier(final2, m);
-    });
     return addSvg([roundPath(final2, 0.25)], style);
   }
-  var cached_words = {};
+  var cachedWords = {};
   function inputChanged() {
-    var finalHTML = "";
-    character_input.value.split("\n").forEach(function(l) {
+    let finalHTML = "";
+    characterInput.value.split("\n").forEach(function(l) {
       l.split(" ").forEach(function(w) {
         if (common_default[w] != void 0)
           w = common_default[w];
-        var parsed_word = "";
-        if (cached_words[w] == void 0) {
+        let parsedWord = "";
+        if (cachedWords[w] == void 0) {
           try {
-            parsed_word = parseWord(w);
-            cached_words[w] = parsed_word;
+            parsedWord = parseWord(w);
+            cachedWords[w] = parsedWord;
           } catch (err) {
             return;
           }
         } else {
-          parsed_word = cached_words[w];
+          parsedWord = cachedWords[w];
         }
-        if (parsed_word != "")
-          finalHTML += parsed_word;
+        if (parsedWord != "")
+          finalHTML += parsedWord;
       });
       finalHTML += "<br>";
     });
     preview.innerHTML = finalHTML;
   }
   window.onload = function() {
-    character_input.addEventListener("keyup", inputChanged);
+    characterInput.addEventListener("keyup", inputChanged);
     inputChanged();
     const updatePixelRatio = () => {
       let pr = window.devicePixelRatio;
-      var stroke_width = 1 / (window.devicePixelRatio || 1);
-      CCSStylesheetRuleStyle(0, "path", "stroke-width", stroke_width.toString() + "px");
+      let strokeWidth = 1 / (window.devicePixelRatio || 1);
+      CCSStylesheetRuleStyle(0, "path", "stroke-width", strokeWidth.toString() + "px");
       matchMedia(`(resolution: ${pr}dppx)`).addEventListener("change", updatePixelRatio, { once: true });
     };
     updatePixelRatio();

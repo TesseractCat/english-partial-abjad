@@ -18,7 +18,7 @@ export function scalePath(path, sx, sy) {
 
 export function roundPath(path, step) {
     step || (step = 1.0);
-    var inv = 1/step;
+    let inv = 1/step;
     return executeOnPoints(path, function (p) {
         p.x = Math.round(p.x * inv)/inv;
         p.y = Math.round(p.y * inv)/inv;
@@ -59,7 +59,7 @@ export function createSplit(left, right) {
     );
 }
 export function createSmaller(path, sf) {
-    var t = (10 - (sf * 10)) / 2;
+    let t = (10 - (sf * 10)) / 2;
     return translatePath(scalePath(path, sf, sf), t, t);
 }
 export function addBottomMarker(path, marker) {
@@ -91,12 +91,12 @@ export function textSmall(text) {
     return data.radicals[text].small;
 }
 export function textCompound(large, small) {
-    if (data.combos[large + "," + small] != undefined)
-        return data.combos[large + "," + small].default;
+    if (data.combos[large]?.[small] != undefined)
+        return data.combos[large][small];
     
-    var easy_combo = data.easy_combos.includes(large + "," + small);
+    let easyCombo = data.easyCombos.includes(large + "," + small);
     
-    return createCompound(textLarge(large), textSmall(small), easy_combo);
+    return createCompound(textLarge(large), textSmall(small), easyCombo);
 }
 
 export function pathToSvg(path) {
@@ -108,7 +108,7 @@ export function pathsToSvg(pathArr, style) {
     style = style || '';
     let svgOut =
         "<svg viewBox='-1 -1 12 12' xmlns='http://www.w3.org/2000/svg' style='" + style + "'>";
-    for (var i = 0; i < pathArr.length; i++) {
+    for (let i = 0; i < pathArr.length; i++) {
         svgOut += pathToSvg(pathArr[i]);
     }
     svgOut += "</svg>";
