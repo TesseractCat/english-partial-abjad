@@ -1,5 +1,5 @@
-const c = require('./character');
-const dictionary = require('./common');
+import * as c from "./character.js";
+import dictionary from "./common.json";
 
 //https://stackoverflow.com/questions/566203/changing-css-values-with-javascript?noredirect=1&lq=1
 function CCSStylesheetRuleStyle(stylesheet, selectorText, style, value){
@@ -165,5 +165,4 @@ window.onload = function () {
     }
 
     updatePixelRatio();
-    
 };
